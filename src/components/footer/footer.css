@@ -1,0 +1,19 @@
+footer {
+  display: flex;
+  width: 75%;
+  justify-content: space-between;
+  margin: auto;
+  height: 5rem;
+  margin-top: 60vh;
+}
+
+#me:hover {
+  color: darkred;
+  cursor: pointer;
+}
+
+#links {
+  display: flex;
+  width: 25%;
+  justify-content: space-evenly;
+}

@@ -1,0 +1,13 @@
+#products {
+  display: flex;
+  width: 50%;
+  margin: auto;
+  margin-top: 2rem;
+  justify-content: space-evenly;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
