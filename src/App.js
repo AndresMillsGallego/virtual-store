@@ -4,6 +4,8 @@ import Footer from './components/footer/Footer'
 import Categories from './components/categories/Categories';
 import Products from './components/products/Products';
 
+
+
 function App() {
   return (
     <div className="App">
