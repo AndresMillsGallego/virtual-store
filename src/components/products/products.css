@@ -1,6 +1,7 @@
 #products {
   display: flex;
   width: 50%;
+  min-width: fit-content;
   margin: auto;
   margin-top: 2rem;
   justify-content: space-evenly;
@@ -8,6 +9,17 @@
 
 .card-footer {
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
+  margin-top: 50%;
+}
+
+#alert {
+  width: 30%;
+  margin: auto;
+  margin-top: 1rem;
+  background-color: darkmagenta;
+  color: beige;
+  z-index: 10;
 }
