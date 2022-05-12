@@ -12,7 +12,7 @@ const Categories = () => {
   const categoryState = useSelector(state => state.categories)
   const categories = categoryState.categories
 
-  const products = useSelector(state => state.products)
+  // const products = useSelector(state => state.products)
 
   const handleActive = (category) => {
     let set = setActive(category);
