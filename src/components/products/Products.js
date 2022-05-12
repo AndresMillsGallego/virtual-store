@@ -1,30 +1,46 @@
-import React, { useState } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
-import { filterProducts, reset } from '../../store/products';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getProducts } from '../../store/products';
 import { addItem } from '../../store/cart'
 import { Card, CardContent, Typography, CardActions, Button, Divider, Alert }
-  from '@mui/material'
+  from '@mui/material';
+import axios from 'axios'; 
 import './products.css'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
-const Products = ({ products, filteredProducts }) => {
+export const updateProduct = async (product, step) => {
+  let url = `https://api-js401.herokuapp.com/api/v1/products/${product._id}`
+  let body = {inStock: product.inStock + step}
+  let response = await axios.put(url, body)
+  console.log(response)
+}
+
+const Products = () => {
 
   const [alert, setAlert] = useState(false);
 
-  let cart = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart);
+  const productsState = useSelector(state => state.products)
+  
   let dispatch = useDispatch();
 
-  const handleCart = (item) => {
-    let action = addItem(item);
-    if (!cart.cartItems.includes(item)) {
-      dispatch(action);
+  const handleCart = (product) => {
+    console.log(cart.cartItems.includes(product))
+    if (!cart.cartItems.includes(product)) {
+      let action = addItem(product);
+      dispatch(action)
+      updateProduct(product, -1)
+      console.log(product)
     } else {
       setAlert(!alert)
     }
-  }
+  } 
 
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [])
 
-  console.log(cart);
+  console.log(productsState);
   return (
     <>
       {alert ? <Alert 
@@ -33,9 +49,9 @@ const Products = ({ products, filteredProducts }) => {
                   id='alert'
                   >--Item Already In Cart!--</Alert> : null}
       <div id='products'>
-        {filteredProducts.length ?
-          filteredProducts.map(product => (
-            <Card key={product.id} sx={{ width: '30%', backgroundColor: 'gainsboro' }}>
+        {productsState.filteredProducts.length ?
+          productsState.filteredProducts.map(product => (
+            <Card key={product._id} sx={{ width: '30%', backgroundColor: 'gainsboro' }}>
               <CardContent>
                 <Typography
                   gutterBottom
@@ -58,12 +74,12 @@ const Products = ({ products, filteredProducts }) => {
                     </Typography>
                     <Divider orientation='vertical'>|</Divider>
                     <Typography>
-                      QTY: {product.inventory}
+                      QTY: {product.inStock}
                     </Typography>
                     <Divider orientation='vertical'>|</Divider>
                     <Button
                       size='small'
-                      onClick={() => handleCart(product.name)}
+                      onClick={() => handleCart(product)}
                     >
                       <AddShoppingCartIcon />
                     </Button>
@@ -78,16 +94,5 @@ const Products = ({ products, filteredProducts }) => {
   )
 }
 
-const mapStateToProps = ({ products }) => {
-  return {
-    products: products.products,
-    filteredProducts: products.filteredProducts,
-  }
-}
 
-const mapDispatchToProps = {
-  filterProducts,
-  reset,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Products);
+export default Products;

@@ -6,7 +6,6 @@ const initialState = {
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'add':
-      console.log(state)
       return {
         ...state, 
         cartItems: [...state.cartItems, action.payload],
@@ -15,7 +14,7 @@ const cartReducer = (state = initialState, action) => {
     case 'remove':
       return {
         ...state,
-        cartItems: state.cartItems.filter(item => item !== action.payload),
+        cartItems: state.cartItems.filter(item => item.name !== action.payload),
         cartCount: state.cartCount - 1,
       }
     default:

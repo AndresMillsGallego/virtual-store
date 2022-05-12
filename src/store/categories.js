@@ -1,35 +1,28 @@
+import axios from 'axios';
+
 const initialState = {
-  categories: [
-    {
-      name: 'funkoPops', 
-      displayName: 'Funko Pops!', 
-      description: 'Find your favorite collectible Funko Pops! here 😁',
-      id: 100,
-    },
-    {
-      name: 'gpks',
-      displayName: 'Garbage Pail Kids',
-      description: 'Add to your collection of gross GPS\'s here!',
-      id: 201,
-    },
-  ],
+  categories: [],
   isActive: '',
 }
 
 const categoryReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'funkoPops':
+    case 'SET_ACTIVE':
+      console.log(state.isActive)
       return {
         ...state,
-        isActive: 'funkoPops',
+        isActive: action.payload,
       }
-    case 'gpk':
+    case 'GET_CATEGORIES':
       return {
         ...state,
-        isActive: 'gpks',
+        categories: [action.payload],
       }
     case 'reset':
-      return initialState;
+      return {
+        ...state,
+        isActive: ''
+      }
       
     default:
       return state
@@ -37,16 +30,22 @@ const categoryReducer = (state = initialState, action) => {
 }
 
 export const setActive = (category) => {
-  if (category === 'funkoPops'){
     return {
-      type: 'funkoPops',
+      type: 'SET_ACTIVE',
       payload: category,
     }
-  } else {
-    return {
-      type: 'gpk',
-      payload: category,
-    }
+}
+
+export const getCategories = () => async (dispatch, getState) => {
+  let response = await axios.get('https://api-js401.herokuapp.com/api/v1/categories');
+
+  dispatch(setCategories(response.data))
+}
+
+export const setCategories = (data) => {
+  return {
+    type: 'GET_CATEGORIES',
+    payload: data,
   }
 }
 
