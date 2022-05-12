@@ -37,14 +37,14 @@ const SimpleCart = (props) => {
     >
       <Box sx={style}>
         <div id='cart-header'>
-        <Typography variant='h5' >Your Cart</Typography>
+        <Typography variant='h5'>Your Cart</Typography>
         <Button onClick={props.handleModal}><ClearIcon sx={{color: 'black'}} /></Button>
         </div>
         {cart.cartItems.length ?
           cart.cartItems.map(item => (
-            <div key={item} className='cart-items'>
-            <Typography>{item}</Typography>
-            <Button onClick={() => handleDelete(item)}><DeleteIcon color='secondary' /></Button>
+            <div key={item._id} className='cart-items'>
+            <Typography>{item.name}</Typography>
+            <Button onClick={() => handleDelete(item.name)}><DeleteIcon color='secondary' /></Button>
             </div>
           )) : <Typography sx={{textAlign: 'center', marginTop: '4rem', marginBottom: '1rem'}}>Cart Empty</Typography>
         }

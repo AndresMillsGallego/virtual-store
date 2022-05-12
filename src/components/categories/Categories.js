@@ -1,30 +1,53 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { setActive, reset } from '../../store/categories'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActive, reset, getCategories } from '../../store/categories'
+import { filterProducts } from '../../store/products';
 import { Button, ButtonGroup } from '@mui/material'
 
 import './categories.css'
 
-const Categories = ({ categories, isActive, setActive, reset }) => {
-  console.log(categories, isActive)
+const Categories = () => {
+  
+  const dispatch = useDispatch();
+  const categoryState = useSelector(state => state.categories)
+  const categories = categoryState.categories
+
+  const products = useSelector(state => state.products)
+
+  const handleActive = (category) => {
+    let set = setActive(category);
+    dispatch(set);
+    let filter = filterProducts(category);
+    dispatch(filter)
+  }
+
+  const handleReset = () => {
+    dispatch(reset());
+  }
+ 
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [])
+
   return (
     <div id='categories'>
       <h2>Browse Our Categories</h2>
       <ButtonGroup variant='text'>
-        {categories.map(category => (
+        {categories.length ?
+        categories[0].results.map(category => (
           <Button
-            data-testid={category.id}
-            key={category.id}
+            data-testid={category._id}
+            key={category._id}
             className='buttons'
-            onClick={() => setActive(category.name)}
+            onClick={() => handleActive(category.name)}
             color='primary'
-            value={category.displayName}
-          >{category.displayName}
+            value={category.name}
+          >{category.name}
           </Button>
-        ))}
-        {isActive ?
+        )) : null}
+        {categoryState.isActive ?
           <Button
-            onClick={() => reset()}
+            onClick={() => handleReset()}
             className='buttons'
             color='warning'
           >Reset</Button> : null}
@@ -34,16 +57,5 @@ const Categories = ({ categories, isActive, setActive, reset }) => {
 
 }
 
-const mapStateToProps = ({ categories }) => {
-  return {
-    categories: categories.categories,
-    isActive: categories.isActive,
-  }
-}
 
-const mapDispatchToProps = {
-  setActive,
-  reset
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default Categories;
