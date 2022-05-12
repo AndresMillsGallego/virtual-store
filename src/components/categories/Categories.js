@@ -27,7 +27,7 @@ const Categories = () => {
  
   useEffect(() => {
     dispatch(getCategories());
-  }, [])
+  }, [dispatch])
 
   return (
     <div id='categories'>
