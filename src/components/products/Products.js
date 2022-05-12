@@ -38,7 +38,7 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(getProducts());
-  }, [])
+  }, [dispatch])
 
   console.log(productsState);
   return (
