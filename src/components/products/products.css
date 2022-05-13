@@ -1,7 +1,6 @@
 #products {
   display: flex;
-  width: 50%;
-  min-width: fit-content;
+  width: 100%;
   margin: auto;
   margin-top: 2rem;
   justify-content: space-evenly;
@@ -13,6 +12,14 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 50%;
+}
+
+.product-buttons {
+  width: 75%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto;
 }
 
 #alert {

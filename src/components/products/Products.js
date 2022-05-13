@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProducts } from '../../store/products';
+import { getProducts, getDetails } from '../../store/products';
 import { addItem } from '../../store/cart'
+import { Link } from 'react-router-dom'
 import { Card, CardContent, Typography, CardActions, Button, Divider, Alert }
   from '@mui/material';
-import axios from 'axios'; 
+import axios from 'axios';
 import './products.css'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import InfoIcon from '@mui/icons-material/Info';
 
 export const updateProduct = async (product, step) => {
   let url = `https://api-js401.herokuapp.com/api/v1/products/${product._id}`
-  let body = {inStock: product.inStock + step}
+  let body = { inStock: product.inStock + step }
   let response = await axios.put(url, body)
   console.log(response)
 }
@@ -21,7 +23,7 @@ const Products = () => {
 
   const cart = useSelector(state => state.cart);
   const productsState = useSelector(state => state.products)
-  
+
   let dispatch = useDispatch();
 
   const handleCart = (product) => {
@@ -34,8 +36,12 @@ const Products = () => {
     } else {
       setAlert(!alert)
     }
-  } 
+  }
 
+  const handleDetails = (id) => {
+    let action = getDetails(id);
+    dispatch(action)
+  }
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch])
@@ -43,11 +49,11 @@ const Products = () => {
   console.log(productsState);
   return (
     <>
-      {alert ? <Alert 
-                  severity='info' 
-                  onClose={() => setAlert(!alert)}
-                  id='alert'
-                  >--Item Already In Cart!--</Alert> : null}
+      {alert ? <Alert
+        severity='info'
+        onClose={() => setAlert(!alert)}
+        id='alert'
+      >--Item Already In Cart!--</Alert> : null}
       <div id='products'>
         {productsState.filteredProducts.length ?
           productsState.filteredProducts.map(product => (
@@ -68,23 +74,28 @@ const Products = () => {
               </CardContent>
               <CardContent variant='div'>
                 <CardActions>
-                  <div className='card-footer'>
-                    <Typography>
-                      ${product.price}
-                    </Typography>
-                    <Divider orientation='vertical'>|</Divider>
-                    <Typography>
-                      QTY: {product.inStock}
-                    </Typography>
-                    <Divider orientation='vertical'>|</Divider>
+                  <div className='product-buttons'>
                     <Button
-                      size='small'
+                      size='medium'
                       onClick={() => handleCart(product)}
                     >
-                      <AddShoppingCartIcon />
+                      <AddShoppingCartIcon  />
+                    </Button>
+                    {/* <Divider orientation='vertical'>|</Divider> */}
+                    <Button size='medium' onClick={() => handleDetails(product._id)}>
+                      <Link to='/virtual-store/product-details' className='links' ><InfoIcon /></Link>
                     </Button>
                   </div>
                 </CardActions>
+                <div className='card-footer'>
+                  <Typography>
+                    ${product.price}
+                  </Typography>
+                  <Divider orientation='vertical'>|</Divider>
+                  <Typography>
+                    QTY: {product.inStock}
+                  </Typography>
+                </div>
               </CardContent>
             </Card>
           )) : null
