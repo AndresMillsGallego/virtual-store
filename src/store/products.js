@@ -3,6 +3,7 @@ import axios from 'axios';
 const initialState = {
   products: [],
   filteredProducts: [],
+  selectedProduct: [],
 }
 
 const productReducer = (state = initialState, action) => {
@@ -19,6 +20,11 @@ const productReducer = (state = initialState, action) => {
         filteredProducts: state.products.filter(product => 
           product.category === action.payload)
       }
+    case 'GET_DETAILS':
+      return {
+        ...state,
+        selectedProduct: state.products.filter(product => product._id === action.payload)
+      }
     case 'add':
       return {
         ...state,
@@ -30,7 +36,6 @@ const productReducer = (state = initialState, action) => {
         })
       }
       case 'remove':
-        console.log(state.products)
         return {
           ...state,
           products: state.products.map(product => {
@@ -66,6 +71,13 @@ export const setProducts = (data) => {
   return {
     type: 'GET_PRODUCTS',
     payload: data,
+  }
+}
+
+export const getDetails = (id) => {
+  return {
+    type: 'GET_DETAILS',
+    payload: id
   }
 }
 

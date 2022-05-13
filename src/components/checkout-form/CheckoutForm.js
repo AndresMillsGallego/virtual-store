@@ -1,9 +1,13 @@
-import React from 'react';
-import { Container, Box, Typography, TextField, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Container, Box, Typography, TextField, Button, Alert } from '@mui/material';
 import './checkout-form.css'
 
 
 const CheckoutForm = () => {
+
+  const [show, setShow] = useState(false);
+
+ 
 
   return (
     <Container component='form' id='forms'>
@@ -20,7 +24,16 @@ const CheckoutForm = () => {
         <TextField label='Credit Card #' variant='standard' sx={{marginBottom: '2rem'}}/>
         <input type='date'/>
         <TextField label='CVV' variant='standard'/>
-        <Button type='click' sx={{marginTop: '50%'}} variant='outlined'>Submit</Button>
+        <Button 
+          type='click' 
+          sx={{marginTop: '50%'}} 
+          variant='outlined'
+          onClick={() => setShow(true)}
+          >Submit</Button>
+            {show ?
+          <Alert severity='success' onClose={() => {}} >Success!  Thank you for your order 😀</Alert>
+          : null
+          }
       </Box>
     </Container>
   )

@@ -1,0 +1,21 @@
+#main-card {
+  background-color:gainsboro;
+  width: 85%;
+  min-width: fit-content;
+  margin: auto;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 10%;
+  width: 75%;
+}
+
+#related {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5rem;
+  width: 90%;
+}

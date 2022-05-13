@@ -20,7 +20,6 @@ const Header = () => {
         <ButtonGroup variant='text'>
           <Button ><Link  to='/virtual-store' className='links' >Home</Link></Button>
           <Button ><Link  to='/virtual-store/categories' className='links'>Categories</Link></Button>
-          <Button ><Link to='/virtual-store/products' className='links'>Products</Link></Button>
         </ButtonGroup>
         <div id='cart'>
           <ShoppingCartIcon onClick={handleModal} />

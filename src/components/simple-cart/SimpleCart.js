@@ -52,7 +52,7 @@ const SimpleCart = (props) => {
           : <Typography sx={{textAlign: 'center', marginTop: '4rem', marginBottom: '1rem'}}>Cart Empty</Typography>
         }
         {cart.cartItems.length ?
-          <Button id='checkout'><Link to='/virtual-store/cart' className='links' >Checkout</Link></Button>
+          <Button variant='outlined' sx={{width: '100%', marginTop: '1rem'}}><Link className='checkout links' to='/virtual-store/cart'>Checkout</Link></Button>
           : null
         }
       </Box>
