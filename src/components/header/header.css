@@ -12,3 +12,10 @@ header {
   display: flex;
   align-items: center;
 }
+
+#store-front {
+  width: 60%;
+  border: 3px solid firebrick;
+  border-radius: 5px;
+  margin-top: 2rem;
+}

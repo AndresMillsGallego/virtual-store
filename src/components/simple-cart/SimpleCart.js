@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { removeItem } from '../../store/cart'
 import { Modal, Button, Typography, Box } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -30,6 +31,7 @@ const SimpleCart = (props) => {
     dispatch(action);
   }
   
+
   return (
     <Modal
       open={props.show}
@@ -46,7 +48,12 @@ const SimpleCart = (props) => {
             <Typography>{item.name}</Typography>
             <Button onClick={() => handleDelete(item.name)}><DeleteIcon color='secondary' /></Button>
             </div>
-          )) : <Typography sx={{textAlign: 'center', marginTop: '4rem', marginBottom: '1rem'}}>Cart Empty</Typography>
+          ))
+          : <Typography sx={{textAlign: 'center', marginTop: '4rem', marginBottom: '1rem'}}>Cart Empty</Typography>
+        }
+        {cart.cartItems.length ?
+          <Button id='checkout'><Link to='/virtual-store/cart' className='links' >Checkout</Link></Button>
+          : null
         }
       </Box>
     </Modal>
