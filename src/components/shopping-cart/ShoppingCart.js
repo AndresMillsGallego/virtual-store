@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../header/Header'
 import Footer from '../footer/Footer'
 import { useSelector } from 'react-redux';
-import { Container, Typography, List, ListItem, ListItemText, TextField } from '@mui/material'
+import { Container, Typography, List, ListItem, ListItemText, } from '@mui/material'
 
 import CheckoutForm from '../checkout-form/CheckoutForm'
 
