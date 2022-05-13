@@ -5,12 +5,13 @@ import logger from './middleware/logger'
 
 import categoryReducer from './categories';
 import productReducer from './products';
-import cartReducer from './cart';
+// import cartReducer from './cart';
+import cartSlice from './cart.slice'
 
 let reducers = combineReducers({
   categories: categoryReducer,
   products: productReducer,
-  cart: cartReducer
+  cart: cartSlice.reducer
 });
 
 export default function store() {

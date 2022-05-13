@@ -9,6 +9,9 @@ import axios from 'axios';
 import './products.css'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import InfoIcon from '@mui/icons-material/Info';
+import cartSlice from '../../store/cart.slice'
+
+let { add, remove } = cartSlice.actions 
 
 export const updateProduct = async (product, step) => {
   let url = `https://api-js401.herokuapp.com/api/v1/products/${product._id}`
@@ -27,9 +30,9 @@ const Products = () => {
   let dispatch = useDispatch();
 
   const handleCart = (product) => {
-    console.log(cart.cartItems.includes(product))
+    
     if (!cart.cartItems.includes(product)) {
-      let action = addItem(product);
+      let action = add(product);
       dispatch(action)
       updateProduct(product, -1)
       console.log(product)
