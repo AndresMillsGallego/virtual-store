@@ -12,7 +12,7 @@ import productsSlice from '../../store/products.slice'
 import { getProducts } from '../../store/products.slice'
 
 let { add } = cartSlice.actions;
-let { getDetails } = productsSlice.actions; 
+let { getDetails, removeStock, filter } = productsSlice.actions; 
 
 export const updateProduct = async (product, step) => {
   let url = `https://api-js401.herokuapp.com/api/v1/products/${product._id}`
@@ -31,14 +31,25 @@ const Products = () => {
   let dispatch = useDispatch();
 
   const handleCart = (product) => {
-    
-    if (!cart.cartItems.includes(product)) {
-      let cartAdd = add(product);
-      dispatch(cartAdd)
-      updateProduct(product, -1)
-    } else {
-      setAlert(!alert)
+    let thisName = cart.cartItems.find(({ name }) => name === product.name)
+    if (thisName) {
+      if (thisName.name !== product.name) {
+        let cartAdd = add(product);
+        dispatch(cartAdd)
+        dispatch(removeStock(product))
+        dispatch(filter(product.category))
+        updateProduct(product, -1)
+        return;
+      } else {
+        setAlert(!alert)
+        return;
+      }
     }
+    let cartAdd = add(product);
+    dispatch(cartAdd)
+    dispatch(removeStock(product))
+    dispatch(filter(product.category))
+    updateProduct(product, -1)
   }
 
   const handleDetails = (id) => {
@@ -60,7 +71,7 @@ const Products = () => {
       <div id='products'>
         {productsState.filteredProducts.length ?
           productsState.filteredProducts.map(product => (
-            <Card key={product._id} sx={{ width: '30%', backgroundColor: 'gainsboro' }}>
+            <Card key={product._id} sx={{ width: '30%', backgroundColor: 'gainsboro', marginTop: '2rem' }}>
               <CardContent>
                 <Typography
                   gutterBottom
@@ -81,11 +92,10 @@ const Products = () => {
                     <Button
                       size='medium'
                       onClick={() => handleCart(product)}
-                      disabled={product.inStock ? false : true}
+                      disabled={product.inStock > 0 ? false : true}
                     >
                       <AddShoppingCartIcon  />
                     </Button>
-                    {/* <Divider orientation='vertical'>|</Divider> */}
                     <Button size='medium' onClick={() => handleDetails(product._id)}>
                       <Link to='/virtual-store/product-details' className='links' ><InfoIcon /></Link>
                     </Button>

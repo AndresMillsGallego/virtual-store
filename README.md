@@ -20,10 +20,34 @@
 
 ## Installation
 
+Installation for this app is quite straight forward.
+
+First clone down the repo: 
+
+```JavaScript
+  git clone <repository>
+```
+
+Then type in the command line:
+
+```JavaScript
+  npm i
+```
+
 ## Usage
+
+To use this app:
+
+- click on the `categories` tab from the homepage
+- select a cartegory from the nav bar
+- from here you can click the "info" button to find out more on that product, or, click the "add to cart" button to add it to your cart
+- at any time you can preview your cart by clicking on the shopping cart icon in the header
+- from there you can remove items from your cart, or proceed to the checkout page
+- at the checkout page you can review the items in your cart as well as see your total
+- finally, you can checkout and complete your order!
 
 ## Contributors/Authors
 
 Project by:  Andres Mills Gallego
 
-## Features / Routes
+

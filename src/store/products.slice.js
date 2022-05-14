@@ -29,13 +29,15 @@ const productsSlice = createSlice ({
         selectedProduct: state.products.filter(product => product._id === action.payload)
       }
     },
-    remove(state, action) {
+    removeStock(state, action) {
       return {
         ...state,
-        products: state.products.forEach(product => {
-          if (product.name === action.payload.name) {
-            product.inStock = product.inStock - 1
-          }
+        products: state.products.map(product => {
+          if (product.name === action.payload.name) 
+            return {
+            ...product, inStock: product.inStock - 1
+            }
+          return product;
         })
       }
     },
@@ -43,9 +45,10 @@ const productsSlice = createSlice ({
       return {
         ...state,
         products: state.products.map(product => {
-          if (product.name === action.payload) {
-            product.inStock = product.inStock + 1
-          }
+          if (product.name === action.payload.name) 
+            return {
+              ...product, inStock: product.inStock + 1
+            }
           return product;
         })
       }
@@ -69,5 +72,6 @@ export const getProducts = () => async (dispatch, getState) => {
     console.log('Error Setting Products', error.message)
   }
 }
+
 
 export default productsSlice;

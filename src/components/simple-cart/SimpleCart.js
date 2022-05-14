@@ -2,14 +2,15 @@ import React from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-// import { removeItem } from '../../store/cart'
 import { Modal, Button, Typography, Box } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearIcon from '@mui/icons-material/Clear';
 import './simpleCart.css'
 import cartSlice from '../../store/cart.slice'
+import productsSlice from '../../store/products.slice'
 
 let { remove } = cartSlice.actions;
+let { addStock, filter } = productsSlice.actions
 
 const style = {
   position: 'absolute',
@@ -36,14 +37,17 @@ const SimpleCart = (props) => {
     let response = await axios.put(url, body)
     return response;
   }
+  
   const handleDelete = (item) => {
     console.log(item)
     let action = remove(item);
     dispatch(action);
+    dispatch(addStock(item))
+    dispatch(filter(item.category))
     updateProduct(item, + 1)
   }
   
-
+  let count = 1;
   return (
     <Modal
       open={props.show}
@@ -58,6 +62,7 @@ const SimpleCart = (props) => {
           cart.cartItems.map(item => (
             <div key={item._id} className='cart-items'>
             <Typography>{item.name}</Typography>
+            <Typography>Qty: {count}</Typography>
             <Button onClick={() => handleDelete(item)}><DeleteIcon color='secondary' /></Button>
             </div>
           ))
