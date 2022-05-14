@@ -1,11 +1,14 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { removeItem } from '../../store/cart'
+// import { removeItem } from '../../store/cart'
 import { Modal, Button, Typography, Box } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearIcon from '@mui/icons-material/Clear';
 import './simpleCart.css'
+import cartSlice from '../../store/cart.slice'
+
+let { remove } = cartSlice.actions;
 
 const style = {
   position: 'absolute',
@@ -27,7 +30,7 @@ const SimpleCart = (props) => {
   let dispatch = useDispatch();
 
   const handleDelete = (item) => {
-    let action = removeItem(item);
+    let action = remove(item);
     dispatch(action);
   }
   

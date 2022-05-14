@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProducts, getDetails } from '../../store/products';
-import { addItem } from '../../store/cart'
 import { Link } from 'react-router-dom'
 import { Card, CardContent, Typography, CardActions, Button, Divider, Alert }
   from '@mui/material';
@@ -9,12 +7,18 @@ import axios from 'axios';
 import './products.css'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import InfoIcon from '@mui/icons-material/Info';
+import cartSlice from '../../store/cart.slice'
+import productsSlice from '../../store/products.slice'
+import { getProducts } from '../../store/products.slice'
+
+let { add } = cartSlice.actions;
+let { getDetails } = productsSlice.actions; 
 
 export const updateProduct = async (product, step) => {
   let url = `https://api-js401.herokuapp.com/api/v1/products/${product._id}`
   let body = { inStock: product.inStock + step }
   let response = await axios.put(url, body)
-  console.log(response)
+  return response;
 }
 
 const Products = () => {
@@ -27,12 +31,11 @@ const Products = () => {
   let dispatch = useDispatch();
 
   const handleCart = (product) => {
-    console.log(cart.cartItems.includes(product))
+    
     if (!cart.cartItems.includes(product)) {
-      let action = addItem(product);
-      dispatch(action)
+      let cartAdd = add(product);
+      dispatch(cartAdd)
       updateProduct(product, -1)
-      console.log(product)
     } else {
       setAlert(!alert)
     }
@@ -46,7 +49,18 @@ const Products = () => {
     dispatch(getProducts());
   }, [dispatch])
 
-  console.log(productsState);
+  // const updatedStock = (payload, step) => {
+  //   let copy = productsState.products;
+  //   let updated = copy.forEach(product => {
+  //     if (product.name === payload.name) {
+  //       product.inStock = product.inStock + step
+  //     }
+  //   })
+  //   return updated;
+  // }
+
+
+ 
   return (
     <>
       {alert ? <Alert
