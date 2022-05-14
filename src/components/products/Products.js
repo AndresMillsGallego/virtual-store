@@ -49,17 +49,6 @@ const Products = () => {
     dispatch(getProducts());
   }, [dispatch])
 
-  // const updatedStock = (payload, step) => {
-  //   let copy = productsState.products;
-  //   let updated = copy.forEach(product => {
-  //     if (product.name === payload.name) {
-  //       product.inStock = product.inStock + step
-  //     }
-  //   })
-  //   return updated;
-  // }
-
-
  
   return (
     <>
@@ -92,6 +81,7 @@ const Products = () => {
                     <Button
                       size='medium'
                       onClick={() => handleCart(product)}
+                      disabled={product.inStock ? false : true}
                     >
                       <AddShoppingCartIcon  />
                     </Button>

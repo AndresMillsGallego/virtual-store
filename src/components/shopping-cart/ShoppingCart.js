@@ -21,7 +21,11 @@ const ShoppingCart = () => {
       <Header />
       <Container>
         <Typography>Your Order</Typography>
-        <List sx={{width: '75%', margin: 'auto'}} >{items}</List>
+        <List sx={{width: '75%', margin: 'auto'}} >{items}
+        <ListItem sx={{borderTop: '3px double fireBrick', marginTop: '4rem'}} secondaryAction={<p>${cart.cartTotal}</p>}>
+        <ListItemText primary={<p>Cart Total</p>}/>
+        </ListItem>
+        </List>
         <CheckoutForm />
       </Container>
       <Footer />

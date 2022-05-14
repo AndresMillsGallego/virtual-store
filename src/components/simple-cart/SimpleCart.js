@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 // import { removeItem } from '../../store/cart'
@@ -29,9 +30,17 @@ const SimpleCart = (props) => {
   let cart = useSelector(state => state.cart)
   let dispatch = useDispatch();
 
+  const updateProduct = async (product, step) => {
+    let url = `https://api-js401.herokuapp.com/api/v1/products/${product._id}`
+    let body = { inStock: product.inStock + step }
+    let response = await axios.put(url, body)
+    return response;
+  }
   const handleDelete = (item) => {
+    console.log(item)
     let action = remove(item);
     dispatch(action);
+    updateProduct(item, + 1)
   }
   
 
@@ -49,7 +58,7 @@ const SimpleCart = (props) => {
           cart.cartItems.map(item => (
             <div key={item._id} className='cart-items'>
             <Typography>{item.name}</Typography>
-            <Button onClick={() => handleDelete(item.name)}><DeleteIcon color='secondary' /></Button>
+            <Button onClick={() => handleDelete(item)}><DeleteIcon color='secondary' /></Button>
             </div>
           ))
           : <Typography sx={{textAlign: 'center', marginTop: '4rem', marginBottom: '1rem'}}>Cart Empty</Typography>
