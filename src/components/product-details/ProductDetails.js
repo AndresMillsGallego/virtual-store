@@ -34,14 +34,14 @@ const ProductDetails = () => {
         <Container id='related'>
           {relatedProducts.length ?
             relatedProducts.map(product => (
-              <Card key={product.key} sx={{backgroundColor: 'gainsboro', width: '25%'}}>
+              <Card key={product._id} sx={{backgroundColor: 'gainsboro', width: '25%'}}>
                 <CardContent>
                   <Typography variant='h5'>{product.name}</Typography>
                   <Typography variant='p'>{product.category}</Typography>
                 </CardContent>
                 <CardContent className='card-footer'>
                   <Typography variant='p'>Stock Qty: {product.inStock}</Typography>
-                  <Typography variant='p'>${product.price}.00</Typography>
+                  <Typography variant='p'>${product.price}</Typography>
                 </CardContent>
               </Card>
 

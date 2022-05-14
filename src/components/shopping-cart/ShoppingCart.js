@@ -11,12 +11,9 @@ const ShoppingCart = () => {
   let cart = useSelector(state => state.cart);
 
   let items = cart.cartItems.map(item => (
-    <>
-      
-      <ListItem key={item._id} secondaryAction={<p>${item.price}.00</p>}>
+      <ListItem key={item._id} secondaryAction={<p>${item.price}</p>}>
         <ListItemText primary={item.name} secondary={item.category} />
       </ListItem>
-    </>
   ))
 
   return (

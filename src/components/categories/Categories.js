@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setActive, reset, getCategories } from '../../store/categories'
-import { filterProducts } from '../../store/products';
 import { Button, ButtonGroup } from '@mui/material'
 import Header from '../header/Header'
 import Footer from '../footer/Footer'
 import Products from '../products/Products';
+import categoriesSlice, { getCategories } from '../../store/categories.slice';
+import productsSlice from '../../store/products.slice';
 
 import './categories.css'
+
+let { resetCategories, setActive } = categoriesSlice.actions;
+let { filter, resetProducts } = productsSlice.actions;
 
 const Categories = () => {
 
@@ -15,17 +18,17 @@ const Categories = () => {
   const categoryState = useSelector(state => state.categories)
   const categories = categoryState.categories
 
-  // const products = useSelector(state => state.products)
 
   const handleActive = (category) => {
     let set = setActive(category);
     dispatch(set);
-    let filter = filterProducts(category);
-    dispatch(filter)
+    let filterProducts = filter(category);
+    dispatch(filterProducts)
   }
 
   const handleReset = () => {
-    dispatch(reset());
+    dispatch(resetCategories());
+    dispatch(resetProducts())
   }
 
   useEffect(() => {
