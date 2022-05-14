@@ -44,7 +44,7 @@ const Categories = () => {
           {categories.length ?
             categories[0].results.map(category => (
               <Button
-                data-testid={category._id}
+                data-testid={'test'}
                 key={category._id}
                 className='buttons'
                 onClick={() => handleActive(category.name)}

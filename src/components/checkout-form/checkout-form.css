@@ -13,4 +13,5 @@
   flex-direction: column;
   border: 3px solid navy;
   padding: 1rem;
+  background-color: rgba(220, 220, 220, 0.878);
 }

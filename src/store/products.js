@@ -25,7 +25,7 @@ const productReducer = (state = initialState, action) => {
         ...state,
         selectedProduct: state.products.filter(product => product._id === action.payload)
       }
-    case 'add':
+    case 'remove':
       return {
         ...state,
         products: state.products.map(product => {
@@ -35,7 +35,7 @@ const productReducer = (state = initialState, action) => {
           return product;
         })
       }
-      case 'remove':
+      case 'add':
         return {
           ...state,
           products: state.products.map(product => {
@@ -78,6 +78,20 @@ export const getDetails = (id) => {
   return {
     type: 'GET_DETAILS',
     payload: id
+  }
+}
+
+export const removeStock = (product) => {
+  return {
+    type: 'remove',
+    payload: product
+  }
+}
+
+export const addStock = (product) => {
+  return {
+    type: 'add',
+    payload: product
   }
 }
 
