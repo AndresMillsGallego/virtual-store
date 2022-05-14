@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { getProducts } from '../../store/products';
-import { addItem } from '../../store/cart'
 import { Link } from 'react-router-dom'
 import { Card, CardContent, Typography, CardActions, Button, Divider, Alert }
   from '@mui/material';
@@ -14,7 +12,7 @@ import productsSlice from '../../store/products.slice'
 import { getProducts } from '../../store/products.slice'
 
 let { add } = cartSlice.actions;
-let { getDetails, filter } = productsSlice.actions; 
+let { getDetails } = productsSlice.actions; 
 
 export const updateProduct = async (product, step) => {
   let url = `https://api-js401.herokuapp.com/api/v1/products/${product._id}`
@@ -51,15 +49,15 @@ const Products = () => {
     dispatch(getProducts());
   }, [dispatch])
 
-  const updatedStock = (payload, step) => {
-    let copy = productsState.products;
-    let updated = copy.forEach(product => {
-      if (product.name === payload.name) {
-        product.inStock = product.inStock + step
-      }
-    })
-    return updated;
-  }
+  // const updatedStock = (payload, step) => {
+  //   let copy = productsState.products;
+  //   let updated = copy.forEach(product => {
+  //     if (product.name === payload.name) {
+  //       product.inStock = product.inStock + step
+  //     }
+  //   })
+  //   return updated;
+  // }
 
 
  
